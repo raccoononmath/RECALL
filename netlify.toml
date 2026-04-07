@@ -1,0 +1,30 @@
+[build]
+  # No build command needed - we push pre-built static files
+  publish = "."
+
+# Redirect /recalls/ to serve from this repo's root
+# (If deploying as a subdirectory of newparentreviews.net)
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Clean URLs
+[[redirects]]
+  from = "/categories"
+  to = "/categories/index.html"
+  status = 200
+
+# 404 page
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404

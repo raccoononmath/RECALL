@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is My Product Recalled? | Parent Recall Watch</title>
+    <meta name="description" content="Check if your baby product has been recalled. Search by brand, product name, or model number. Free, instant CPSC recall lookup.">
+    <link rel="canonical" href="https://newparentreviews.net/recalls/check/">
+    <link rel="stylesheet" href="/recalls/assets/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9888;</text></svg>">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Is My Product Recalled? - CPSC Recall Checker", "description": "Check if your baby product has been recalled. Search by brand, product name, or model number. Free, instant CPSC recall lookup.", "url": "https://newparentreviews.net/recalls/check/", "applicationCategory": "UtilityApplication", "operatingSystem": "Web Browser"}</script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="/recalls/" class="site-logo"><span>&#9888;</span> Parent Recall Watch</a>
+            <nav class="site-nav">
+                <a href="/recalls/">Latest</a>
+                <a href="/recalls/categories/">Categories</a>
+                <a href="/recalls/brands/">Brands</a>
+                <a href="/recalls/check/">Check Product</a>
+                <a href="/">Reviews</a>
+            </nav>
+        </div>
+    </header>
+
+    
+    <section class="hero">
+        <div class="container">
+            <h1>&#128269; Is My Product Recalled?</h1>
+            <p>Type a product name, brand, or model number below to instantly check if it's been recalled.</p>
+        </div>
+    </section>
+
+    <section class="search-section" style="padding:32px 0;">
+        <div class="container">
+            <div class="search-box" style="max-width:600px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                </svg>
+                <input type="text" id="check-input" placeholder="e.g., Graco stroller, Fisher-Price swing, Britax car seat..." autofocus style="font-size:1.1rem;padding:14px 16px 14px 44px;">
+            </div>
+            <p style="text-align:center;font-size:0.8rem;color:#9ca3af;margin-top:8px;">
+                Search across 12 tracked recalls. Updated daily from CPSC.gov.
+            </p>
+        </div>
+    </section>
+
+    <section class="recalls-section" style="padding-top:0;">
+        <div class="container">
+            <div id="check-results"></div>
+            <div id="check-empty" style="display:none;text-align:center;padding:40px 0;">
+                <p style="font-size:1.2rem;color:#16a34a;font-weight:700;">&#9989; No recalls found matching your search.</p>
+                <p style="color:#6b7280;margin-top:8px;">Your product doesn't appear in our recall database. You can also check directly on <a href="https://www.cpsc.gov/Recalls" target="_blank" rel="noopener">CPSC.gov</a>.</p>
+            </div>
+            <div id="check-prompt" style="text-align:center;padding:40px 0;color:#6b7280;">
+                <p>Start typing to search...</p>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding:0 0 40px;">
+        <div class="container">
+            <div class="affiliate-box">
+                <h3>&#128722; Shop Safe Baby Products</h3>
+                <p>Looking for products with top safety ratings?</p>
+                <div class="affiliate-links">
+                    <a href="https://www.amazon.com/s?k=best+rated+baby+products+safety&tag=newparentrev-20" target="_blank" rel="noopener nofollow sponsored" class="affiliate-link">
+                        <span class="affiliate-link-title">Top-Rated Baby Products</span>
+                        <span class="affiliate-link-text">See Amazon's highest-rated baby gear &rarr;</span>
+                    </a>
+                    <a href="https://newparentreviews.net" class="affiliate-link">
+                        <span class="affiliate-link-title">NewParentReviews.net</span>
+                        <span class="affiliate-link-text">Our expert baby product reviews &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    const recalls = [{"t": "Graco Recalls Lightweight Strollers Due to Fall Hazard", "d": "2025-03-15", "p": "Graco NimbleLite Stroller", "b": "Graco Children's Products Inc.", "h": "The stroller's hinge mechanism can partially release during folding and unfolding, posing a fall hazard to children in...", "u": "/recalls/recall/25-051-graco-recalls-lightweight-strollers-due-to-fall-hazard.html", "c": "strollers"}, {"t": "Fisher-Price Recalls Infant Swings Due to Entrapment Hazard", "d": "2025-03-01", "p": "Fisher-Price Soothe & Swing", "b": "Mattel Inc.", "h": "Infants who are not restrained in the swing can move into a position between the seat pad and plastic tray, posing an...", "u": "/recalls/recall/25-043-fisher-price-recalls-infant-swings-due-to-entrapment-hazard.html", "c": "swings-bouncers"}, {"t": "Dream On Me Recalls Cribs Due to Entrapment and Suffocation Hazards", "d": "2025-02-20", "p": "Dream On Me Synergy 5-in-1 Convertible Crib", "b": "Dream On Me Industries Inc.", "h": "The crib slats can loosen and detach, creating gaps that pose entrapment and suffocation hazards to infants.", "u": "/recalls/recall/25-038-dream-on-me-recalls-cribs-due-to-entrapment-and-suffocation-hazards.html", "c": "cribs-cradles"}, {"t": "Britax Recalls Child Car Seats Due to Harness Issue", "d": "2025-02-05", "p": "Britax Boulevard ClickTight Convertible Car Seat", "b": "Britax Child Safety Inc.", "h": "The harness chest clip can crack or break during normal use, which could prevent the harness from properly restraining...", "u": "/recalls/recall/25-029-britax-recalls-child-car-seats-due-to-harness-issue.html", "c": "car-seats"}, {"t": "IKEA Recalls Children's Dressers Due to Tip-Over Hazard", "d": "2025-01-25", "p": "IKEA KULLEN 3-Drawer Dresser", "b": "IKEA", "h": "The dressers pose a serious tip-over and entrapment hazard if they are not properly anchored to the wall, which can...", "u": "/recalls/recall/25-022-ikea-recalls-childrens-dressers-due-to-tip-over-hazard.html", "c": "furniture"}, {"t": "Target Recalls Cat & Jack Children's Pajamas Due to Burn Hazard", "d": "2025-01-15", "p": "Cat & Jack Fleece Pajama Sets", "b": "Target Corporation", "h": "The children's pajamas fail to meet the federal flammability standards for children's sleepwear, posing a burn hazard...", "u": "/recalls/recall/25-018-target-recalls-cat-jack-childrens-pajamas-due-to-burn-hazard.html", "c": "clothing"}, {"t": "Skip Hop Recalls Activity Centers Due to Choking Hazard", "d": "2024-12-10", "p": "Skip Hop Explore & More Baby Activity Center", "b": "Skip Hop Inc. (Carter's subsidiary)", "h": "Small parts can break off from the toy attachments on the activity center, posing a choking hazard to young children.", "u": "/recalls/recall/24-312-skip-hop-recalls-activity-centers-due-to-choking-hazard.html", "c": "toys"}, {"t": "Evenflo Recalls High Chairs Due to Fall Hazard", "d": "2024-11-20", "p": "Evenflo 4-in-1 Eat & Grow Convertible High Chair", "b": "Evenflo Company Inc.", "h": "The seat restraint buckle can become disengaged during use, posing a fall hazard to young children.", "u": "/recalls/recall/24-298-evenflo-recalls-high-chairs-due-to-fall-hazard.html", "c": "high-chairs"}, {"t": "Summer Infant Recalls Baby Gates Due to Fall Hazard", "d": "2024-10-30", "p": "Summer Infant Multi-Use Walk-Thru Gate", "b": "Summer Infant Inc.", "h": "The pressure-mount hardware can loosen over time, causing the gate to detach from the doorway or stairway, posing a...", "u": "/recalls/recall/24-275-summer-infant-recalls-baby-gates-due-to-fall-hazard.html", "c": "baby-gates"}, {"t": "Nuna Recalls Baby Carriers Due to Buckle Failure", "d": "2024-10-05", "p": "Nuna CUDL Clik Baby Carrier", "b": "Nuna International BV", "h": "The waist buckle can unlatch unexpectedly during use, posing a fall hazard to the child.", "u": "/recalls/recall/24-250-nuna-recalls-baby-carriers-due-to-buckle-failure.html", "c": "baby-carriers"}, {"t": "Philips Avent Recalls Baby Bottles Due to Choking Hazard", "d": "2024-09-15", "p": "Philips Avent Anti-Colic Baby Bottles", "b": "Philips Consumer Lifestyle", "h": "The anti-colic insert valve can detach from the bottle during feeding, posing a choking hazard to infants.", "u": "/recalls/recall/24-230-philips-avent-recalls-baby-bottles-due-to-choking-hazard.html", "c": "feeding"}, {"t": "Munchkin Recalls Bath Toys Due to Mold Hazard", "d": "2024-08-25", "p": "Munchkin Ocean Squirts Bath Toys", "b": "Munchkin Inc.", "h": "Water can enter the toys through the squeeze hole and if not properly dried, mold can accumulate inside. Squeezing the...", "u": "/recalls/recall/24-210-munchkin-recalls-bath-toys-due-to-mold-hazard.html", "c": "bath"}];
+
+    const input = document.getElementById('check-input');
+    const results = document.getElementById('check-results');
+    const empty = document.getElementById('check-empty');
+    const prompt = document.getElementById('check-prompt');
+
+    let debounceTimer;
+    input.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(doSearch, 200);
+    });
+
+    function doSearch() {
+        const q = input.value.toLowerCase().trim();
+        if (q.length < 2) {
+            results.innerHTML = '';
+            empty.style.display = 'none';
+            prompt.style.display = '';
+            return;
+        }
+        prompt.style.display = 'none';
+
+        const words = q.split(/\s+/);
+        const matches = recalls.filter(r => {
+            const text = (r.t + ' ' + r.p + ' ' + r.b + ' ' + r.h).toLowerCase();
+            return words.every(w => text.includes(w));
+        });
+
+        if (matches.length === 0) {
+            results.innerHTML = '';
+            empty.style.display = '';
+            return;
+        }
+
+        empty.style.display = 'none';
+        results.innerHTML = matches.slice(0, 20).map(r => `
+            <article class="recall-card">
+                <div class="recall-meta">
+                    <span class="recall-date">${r.d}</span>
+                    <span class="recall-badge">RECALLED</span>
+                </div>
+                <h3 class="recall-title"><a href="${r.u}">${r.t}</a></h3>
+                ${r.b ? '<p class="recall-description"><strong>Brand:</strong> ' + r.b + '</p>' : ''}
+                ${r.p ? '<p class="recall-description"><strong>Products:</strong> ' + r.p + '</p>' : ''}
+                ${r.h ? '<p class="recall-description"><strong>Hazard:</strong> ' + r.h + '</p>' : ''}
+                <div class="recall-actions">
+                    <a href="${r.u}">Full Details & Safe Alternatives</a>
+                </div>
+            </article>
+        `).join('');
+    }
+    </script>
+
+    <section class="email-signup" id="subscribe">
+        <div class="container">
+            <h2>Get Recall Alerts in Your Inbox</h2>
+            <p>Join Parent Recall Watch — we email you the moment a new child product recall drops. Free, no spam, unsubscribe anytime.</p>
+            <form class="email-form" action="https://app.beehiiv.com/subscribe/YOUR_BEEHIIV_PUB_ID" method="POST" target="_blank">
+                <input type="email" name="email" placeholder="your@email.com" aria-label="Email address" required>
+                <button type="submit">Get Alerts</button>
+            </form>
+            <p style="font-size:0.75rem;color:#9ca3af;margin-top:8px;">Powered by Beehiiv. We never share your email.</p>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Data sourced from <a href="https://www.cpsc.gov" target="_blank" rel="noopener">CPSC.gov</a>.
+            Not affiliated with the U.S. Consumer Product Safety Commission.</p>
+            <p style="margin-top:6px">Some links on this site are affiliate links. We may earn a small commission if you purchase through them, at no extra cost to you.</p>
+            <p style="margin-top:8px">&copy; 2026 Parent Recall Watch &middot;
+            A <a href="/">NewParentReviews.net</a> project &middot;
+            <a href="/recalls/brands/">Brands</a> &middot;
+            <a href="/recalls/check/">Product Lookup</a></p>
+        </div>
+    </footer>
+</body>
+</html>
