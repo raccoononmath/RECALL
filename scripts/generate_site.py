@@ -35,7 +35,7 @@ AMAZON_TAG = "newparentrev-20"
 # ========================================================
 # BEEHIIV - Replace with your actual publication ID
 # ========================================================
-BEEHIIV_PUBLICATION_ID = "YOUR_BEEHIIV_PUB_ID"
+BEEHIIV_PUBLICATION_ID = "pub_4134289b-7960-4896-a605-f43c1876d35b"
 
 RECALLS_PER_PAGE = 20
 
