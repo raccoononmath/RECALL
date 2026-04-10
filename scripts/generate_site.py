@@ -30,7 +30,7 @@ SITE_NAME = "Parent Recall Watch"
 # ========================================================
 # AMAZON AFFILIATE TAG - Replace with your actual tag!
 # ========================================================
-AMAZON_TAG = "newparentrev-20"
+AMAZON_TAG = "newparentrevi-20"
 
 # ========================================================
 # BEEHIIV - Replace with your actual publication ID
@@ -277,6 +277,7 @@ def recall_card_html(recall: dict) -> str:
     title = recall.get("Title") or "Untitled Recall"
     cat = recall.get("_category", "other")
     cat_name = CATEGORY_CONFIG.get(cat, {}).get("name", cat.replace("-", " ").title())
+    recall_num = recall.get("RecallNumber", "")
 
     desc = recall.get("Description", "")
     if not desc:
@@ -291,6 +292,51 @@ def recall_card_html(recall: dict) -> str:
         if hazard:
             break
 
+    remedy = ""
+    for r in recall.get("Remedies", []):
+        remedy = r.get("Name", "")
+        if remedy:
+            break
+
+    # Product details
+    product_details = ""
+    for p in recall.get("Products", []):
+        pname = p.get("Name", "")
+        pdesc = p.get("Description", "")
+        units = p.get("NumberOfUnits", "")
+        parts = []
+        if pname:
+            parts.append(f"<strong>{escape(pname)}</strong>")
+        if pdesc:
+            parts.append(escape(pdesc))
+        if units:
+            parts.append(f"<em>Units: {escape(str(units))}</em>")
+        if parts:
+            product_details = "<p>" + "</p><p>".join(parts) + "</p>"
+        break
+
+    # Consumer contact
+    contact_html = ""
+    contacts = recall.get("Consumers", [])
+    if contacts:
+        c = contacts[0]
+        phone = c.get("Phone", "")
+        url = c.get("URL", "")
+        name = c.get("Name", "")
+        parts = []
+        if name:
+            parts.append(escape(name))
+        if phone:
+            parts.append(escape(phone))
+        if url:
+            parts.append(f'<a href="{escape(url)}" target="_blank" rel="noopener">{escape(url)}</a>')
+        if parts:
+            contact_html = f'<p class="recall-description"><strong>Contact:</strong> {" | ".join(parts)}</p>'
+
+    # CPSC link
+    cpsc_url = recall.get("URL", f"https://www.cpsc.gov/Recalls")
+    cpsc_link = f'<a href="{escape(cpsc_url)}" target="_blank" rel="noopener" style="font-size:0.85rem;">View on CPSC.gov &rarr;</a>'
+
     img_html = ""
     images = recall.get("Images", [])
     if images:
@@ -300,27 +346,41 @@ def recall_card_html(recall: dict) -> str:
 
     # Brand link
     brand = ""
-    brand_link = ""
+    brand_slug_str = ""
     for m in recall.get("Manufacturers", []):
         brand = m.get("Name", "")
         if brand:
-            brand_link = f' <a href="/recalls/brands/{get_brand_slug(brand)}.html" style="font-size:0.8rem;color:#6b7280;">({escape(brand)})</a>'
+            brand_slug_str = get_brand_slug(brand)
             break
 
+    brand_html = f'<span style="font-size:0.85rem;color:#6b7280;">By <a href="/recalls/brands/{escape(brand_slug_str)}.html">{escape(brand)}</a></span>' if brand else ""
+
+    # Affiliate links for this category
+    recs = AFFILIATE_RECOMMENDATIONS.get(cat, AFFILIATE_RECOMMENDATIONS.get("other", []))
+    aff_links = ""
+    for rec in recs[:2]:
+        url = amazon_affiliate_url(rec["search"])
+        aff_links += f'<a href="{url}" target="_blank" rel="noopener nofollow sponsored" class="affiliate-link"><span class="affiliate-link-title">{escape(rec["title"])}</span><span class="affiliate-link-text">{escape(rec["text"])} &rarr;</span></a>'
+    aff_html = f'<div class="affiliate-box" style="margin-top:12px;"><h3>&#128722; Need a Safe Replacement?</h3><div class="affiliate-links">{aff_links}</div></div>' if aff_links else ""
+
+    recall_num_html = f'<span style="font-size:0.8rem;color:#9ca3af;">Recall #{escape(str(recall_num))}</span>' if recall_num else ""
+
     return f"""
-    <article class="recall-card">
+    <article class="recall-card" id="recall-{escape(slug)}">
         {img_html}
         <div class="recall-meta">
             <span class="recall-date">{date}</span>
             <span class="recall-badge">{escape(cat_name)}</span>
+            {recall_num_html}
         </div>
-        <h3 class="recall-title"><a href="/recalls/recall/{escape(slug)}.html">{escape(title)}</a>{brand_link}</h3>
-        {f'<p class="recall-description"><strong>Hazard:</strong> {escape(truncate(hazard, 150))}</p>' if hazard else ''}
-        <p class="recall-description">{escape(truncate(desc))}</p>
-        <div class="recall-actions">
-            <a href="/recalls/recall/{escape(slug)}.html">Full Details</a>
-            <a href="/recalls/categories/{escape(cat)}.html">{escape(cat_name)}</a>
-        </div>
+        <h2 class="recall-title" style="font-size:1.1rem;"><a href="/recalls/recall/{escape(slug)}.html">{escape(title)}</a></h2>
+        {brand_html}
+        {f'<div style="margin-top:10px;"><p class="recall-description"><strong>&#9888;&#65039; Hazard:</strong> {escape(hazard)}</p></div>' if hazard else ''}
+        {f'<p class="recall-description"><strong>&#128295; Remedy:</strong> {escape(remedy)}</p>' if remedy else ''}
+        {f'<div style="margin-top:8px;font-size:0.9rem;color:#4b5563;">{product_details}</div>' if product_details else ''}
+        {contact_html}
+        <div style="margin-top:8px;">{cpsc_link}</div>
+        {aff_html}
     </article>"""
 
 
