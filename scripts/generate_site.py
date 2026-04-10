@@ -189,20 +189,20 @@ def base_template(title: str, content: str, canonical: str = "", meta_desc: str 
     <title>{escape(title)} | {SITE_NAME}</title>
     <meta name="description" content="{escape(meta_desc or title)}">
     {f'<link rel="canonical" href="{canonical}">' if canonical else ''}
-    <link rel="stylesheet" href="/recalls/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9888;</text></svg>">
     {schema_tag}
 </head>
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="/recalls/" class="site-logo"><span>&#9888;</span> {SITE_NAME}</a>
+            <a href="/" class="site-logo"><span>&#9888;</span> {SITE_NAME}</a>
             <nav class="site-nav">
-                <a href="/recalls/">Latest</a>
-                <a href="/recalls/categories/">Categories</a>
-                <a href="/recalls/brands/">Brands</a>
-                <a href="/recalls/check/">Check Product</a>
-                <a href="/">Reviews</a>
+                <a href="/">Latest</a>
+                <a href="/categories/">Categories</a>
+                <a href="/brands/">Brands</a>
+                <a href="/check/">Check Product</a>
+                <a href="https://newparentreviews.com">Reviews</a>
             </nav>
         </div>
     </header>
@@ -228,8 +228,8 @@ def base_template(title: str, content: str, canonical: str = "", meta_desc: str 
             <p style="margin-top:6px">Some links on this site are affiliate links. We may earn a small commission if you purchase through them, at no extra cost to you.</p>
             <p style="margin-top:8px">&copy; {datetime.now().year} {SITE_NAME} &middot;
             A <a href="/">NewParentReviews.net</a> project &middot;
-            <a href="/recalls/brands/">Brands</a> &middot;
-            <a href="/recalls/check/">Product Lookup</a></p>
+            <a href="/brands/">Brands</a> &middot;
+            <a href="/check/">Product Lookup</a></p>
         </div>
     </footer>
 </body>
@@ -353,7 +353,7 @@ def recall_card_html(recall: dict) -> str:
             brand_slug_str = get_brand_slug(brand)
             break
 
-    brand_html = f'<span style="font-size:0.85rem;color:#6b7280;">By <a href="/recalls/brands/{escape(brand_slug_str)}.html">{escape(brand)}</a></span>' if brand else ""
+    brand_html = f'<span style="font-size:0.85rem;color:#6b7280;">By <a href="/brands/{escape(brand_slug_str)}.html">{escape(brand)}</a></span>' if brand else ""
 
     # Affiliate links for this category
     recs = AFFILIATE_RECOMMENDATIONS.get(cat, AFFILIATE_RECOMMENDATIONS.get("other", []))
@@ -373,7 +373,7 @@ def recall_card_html(recall: dict) -> str:
             <span class="recall-badge">{escape(cat_name)}</span>
             {recall_num_html}
         </div>
-        <h2 class="recall-title" style="font-size:1.1rem;"><a href="/recalls/recall/{escape(slug)}.html">{escape(title)}</a></h2>
+        <h2 class="recall-title" style="font-size:1.1rem;"><a href="/recall/{escape(slug)}.html">{escape(title)}</a></h2>
         {brand_html}
         {f'<div style="margin-top:10px;"><p class="recall-description"><strong>&#9888;&#65039; Hazard:</strong> {escape(hazard)}</p></div>' if hazard else ''}
         {f'<p class="recall-description"><strong>&#128295; Remedy:</strong> {escape(remedy)}</p>' if remedy else ''}
@@ -402,7 +402,7 @@ def generate_index(recalls: list):
         count = cat_counts.get(slug, 0)
         if count > 0:
             cat_grid += f"""
-            <a href="/recalls/categories/{slug}.html" class="category-card">
+            <a href="/categories/{slug}.html" class="category-card">
                 <div class="category-icon">{config['icon']}</div>
                 <div class="category-name">{config['name']}</div>
                 <div class="category-count">{count} recall{'s' if count != 1 else ''}</div>
@@ -413,7 +413,7 @@ def generate_index(recalls: list):
 
     content = f"""
     <section class="alert-banner" id="latest-alert">
-        &#9888; Latest: <a href="/recalls/recall/{get_recall_slug(recalls[0])}.html" style="color:inherit;text-decoration:underline;">{escape(truncate(recalls[0].get('Title', ''), 80))}</a> ({format_date(recalls[0].get('RecallDate', ''))})
+        &#9888; Latest: <a href="/recall/{get_recall_slug(recalls[0])}.html" style="color:inherit;text-decoration:underline;">{escape(truncate(recalls[0].get('Title', ''), 80))}</a> ({format_date(recalls[0].get('RecallDate', ''))})
     </section>
 
     <section class="hero">
@@ -421,7 +421,7 @@ def generate_index(recalls: list):
             <h1>Child Product Recalls You Need to Know</h1>
             <p>We monitor CPSC recalls daily so you don't have to. Check if your baby gear is safe.</p>
             <div style="margin-top:20px;">
-                <a href="/recalls/check/" class="cta-button" style="background:#2563eb;font-size:1rem;padding:14px 28px;">&#128269; Is My Product Recalled?</a>
+                <a href="/check/" class="cta-button" style="background:#2563eb;font-size:1rem;padding:14px 28px;">&#128269; Is My Product Recalled?</a>
             </div>
             <div class="stat-bar">
                 <div class="stat-item">
@@ -452,7 +452,7 @@ def generate_index(recalls: list):
             <h2 class="section-title">Latest Recalls</h2>
             <div id="recalls-list">{recall_cards}</div>
             <div class="pagination">
-                <a href="/recalls/all-recalls.html">View All Recalls &rarr;</a>
+                <a href="/all-recalls.html">View All Recalls &rarr;</a>
             </div>
         </div>
     </section>"""
@@ -503,7 +503,7 @@ def generate_recall_detail(recall: dict):
     for m in recall.get("Manufacturers", []):
         brand_name = m.get("Name", "Unknown")
         brand_sl = get_brand_slug(brand_name)
-        mfg_html += f'<p><a href="/recalls/brands/{brand_sl}.html">{escape(brand_name)}</a></p>'
+        mfg_html += f'<p><a href="/brands/{brand_sl}.html">{escape(brand_name)}</a></p>'
     for m in recall.get("ManufacturerCountries", []):
         mfg_html += f"<p><em>Country: {escape(m.get('Country', ''))}</em></p>"
 
@@ -529,8 +529,8 @@ def generate_recall_detail(recall: dict):
     content = f"""
     <div class="container">
         <nav class="breadcrumb">
-            <a href="/recalls/">Home</a> <span>&rsaquo;</span>
-            <a href="/recalls/categories/{escape(cat)}.html">{escape(cat_name)}</a> <span>&rsaquo;</span>
+            <a href="/">Home</a> <span>&rsaquo;</span>
+            <a href="/categories/{escape(cat)}.html">{escape(cat_name)}</a> <span>&rsaquo;</span>
             <span>{escape(truncate(title, 60))}</span>
         </nav>
     </div>
@@ -569,7 +569,7 @@ def generate_recall_detail(recall: dict):
                     </div>
                     <div class="info-box">
                         <h3>Category</h3>
-                        <p><a href="/recalls/categories/{escape(cat)}.html">{escape(cat_name)}</a></p>
+                        <p><a href="/categories/{escape(cat)}.html">{escape(cat_name)}</a></p>
                     </div>
                     {f'<div class="info-box"><h3>Manufacturer</h3>{mfg_html}</div>' if mfg_html else ''}
                     <div class="info-box">
@@ -629,8 +629,8 @@ def generate_category_pages(recalls: list):
         content = f"""
         <div class="container">
             <nav class="breadcrumb">
-                <a href="/recalls/">Home</a> <span>&rsaquo;</span>
-                <a href="/recalls/categories/">Categories</a> <span>&rsaquo;</span>
+                <a href="/">Home</a> <span>&rsaquo;</span>
+                <a href="/categories/">Categories</a> <span>&rsaquo;</span>
                 <span>{config['name']}</span>
             </nav>
         </div>
@@ -665,14 +665,14 @@ def generate_category_pages(recalls: list):
         count = len(by_cat.get(slug, []))
         if count > 0:
             cat_grid += f"""
-            <a href="/recalls/categories/{slug}.html" class="category-card">
+            <a href="/categories/{slug}.html" class="category-card">
                 <div class="category-icon">{config['icon']}</div>
                 <div class="category-name">{config['name']}</div>
                 <div class="category-count">{count} recall{'s' if count != 1 else ''}</div>
             </a>"""
 
     content = f"""
-    <div class="container"><nav class="breadcrumb"><a href="/recalls/">Home</a> <span>&rsaquo;</span> <span>Categories</span></nav></div>
+    <div class="container"><nav class="breadcrumb"><a href="/">Home</a> <span>&rsaquo;</span> <span>Categories</span></nav></div>
     <section class="hero" style="padding:32px 0;"><div class="container"><h1>Recall Categories</h1><p>Browse child product recalls by category</p></div></section>
     <section class="categories-section" style="padding-bottom:48px;"><div class="container"><div class="categories-grid">{cat_grid}</div></div></section>"""
     html = base_template("All Categories", content, f"{SITE_URL}/categories/", "Browse child product recalls by category.")
@@ -699,8 +699,8 @@ def generate_brand_pages(recalls: list):
         content = f"""
         <div class="container">
             <nav class="breadcrumb">
-                <a href="/recalls/">Home</a> <span>&rsaquo;</span>
-                <a href="/recalls/brands/">Brands</a> <span>&rsaquo;</span>
+                <a href="/">Home</a> <span>&rsaquo;</span>
+                <a href="/brands/">Brands</a> <span>&rsaquo;</span>
                 <span>{escape(brand_name)}</span>
             </nav>
         </div>
@@ -730,13 +730,13 @@ def generate_brand_pages(recalls: list):
         slug = get_brand_slug(name)
         count = len(by_brand[name])
         brand_grid += f"""
-        <a href="/recalls/brands/{slug}.html" class="category-card">
+        <a href="/brands/{slug}.html" class="category-card">
             <div class="category-name">{escape(name)}</div>
             <div class="category-count">{count} recall{'s' if count != 1 else ''}</div>
         </a>"""
 
     content = f"""
-    <div class="container"><nav class="breadcrumb"><a href="/recalls/">Home</a> <span>&rsaquo;</span> <span>Brands</span></nav></div>
+    <div class="container"><nav class="breadcrumb"><a href="/">Home</a> <span>&rsaquo;</span> <span>Brands</span></nav></div>
     <section class="hero" style="padding:32px 0;">
         <div class="container">
             <h1>Recalls by Brand</h1>
@@ -779,7 +779,7 @@ def generate_check_page(recalls: list):
             "p": " | ".join(products),
             "b": " | ".join(brands),
             "h": truncate(hazard, 120),
-            "u": f"/recalls/recall/{get_recall_slug(r)}.html",
+            "u": f"/recall/{get_recall_slug(r)}.html",
             "c": r.get("_category", "other"),
         })
 
@@ -913,7 +913,7 @@ def generate_all_recalls_page(recalls: list):
     cards = "".join(recall_card_html(r) for r in recalls)
 
     content = f"""
-    <div class="container"><nav class="breadcrumb"><a href="/recalls/">Home</a> <span>&rsaquo;</span> <span>All Recalls</span></nav></div>
+    <div class="container"><nav class="breadcrumb"><a href="/">Home</a> <span>&rsaquo;</span> <span>All Recalls</span></nav></div>
     <section class="hero" style="padding:24px 0;"><div class="container"><h1>All Tracked Recalls ({len(recalls)})</h1></div></section>
     <section class="search-section"><div class="container"><div class="search-box">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
